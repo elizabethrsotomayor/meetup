@@ -49,15 +49,19 @@ def meetup(year: int, month: int, week: str, day_of_week: str):
                 date_to_return = datetime.date(year, month, num)
                 break
             # for February leap years
-            elif week == "last" and occurence >= 4 and new_day.month == 2 and calendar.monthrange(date.year, date.month)[1] > 28:
+            elif week == "last" and occurence >= 4 and new_day.month == 2 and \
+                    calendar.monthrange(date.year, date.month)[1] > 28:
                 date_to_return = datetime.date(year, month, num)
             # for normal February years
             elif week == "last" and occurence >= 4 and new_day.month == 2:
                 date_to_return = datetime.date(year, month, num)
                 break
+            elif week == "5th" and month == 2:
+                raise MeetupDayException
 
     return date_to_return
 
 
-def MeetupDayException():
-    raise TypeError('%s() arg 1 must be %s')
+class MeetupDayException(Exception):
+    def __init__(self, *args, **kwargs):
+        Exception.__init__(self, ".+")
